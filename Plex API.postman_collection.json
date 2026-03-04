@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "9c4e37f5-d8a6-4fbe-9ae6-500b808daea3",
+		"name": "Plex API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "52896315",
+		"_collection_link": "https://alex-ross-qa-4106175.postman.co/workspace/Alex-Ross's-Workspace~8245ffef-d7f9-4f6d-82e6-bff8e8efe08b/collection/52896315-9c4e37f5-d8a6-4fbe-9ae6-500b808daea3?action=share&source=collection_link&creator=52896315"
+	},
+	"item": [
+		{
+			"name": "Identify",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is acceptable\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Server identity returned\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"MediaContainer\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/identity",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"identity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Libraries",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Libraries returned\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"MediaContainer\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Expected library exists\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Newly Released\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Plex-Token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/library/sections",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"library",
+						"sections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Recently added items returned\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"MediaContainer\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains movie items\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include('type=\"movie\"');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Plex-Token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/library/recentlyAdded?X-Plex-Container-Size=100&type=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"library",
+						"recentlyAdded"
+					],
+					"query": [
+						{
+							"key": "X-Plex-Container-Size",
+							"value": "100"
+						},
+						{
+							"key": "type",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

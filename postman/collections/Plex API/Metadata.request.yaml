@@ -1,0 +1,6 @@
+$kind: http-request
+name: Metadata
+url: ""
+method: GET
+order: 2813713181548228
+examples: ./.resources\Metadata.resources\examples
