@@ -4,4 +4,28 @@ url: "{{base_url}}/library/sections"
 method: GET
 headers:
   X-Plex-Token: "{{token}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200\", () => {\r
+
+      \    pm.expect(pm.response.status).to.equal(\"OK\");\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Libraries returned\", () => {\r
+
+      \    pm.expect(pm.response.body).to.include(\"MediaContainer\");\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Expected library exists\", () => {\r
+
+      \    pm.expect(pm.response.body).to.include(\"Newly Released\");\r
+
+      });"
+    language: text/javascript
 order: 241594594029935

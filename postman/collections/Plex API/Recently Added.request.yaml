@@ -1,0 +1,36 @@
+$kind: http-request
+name: Recently Added
+url: "{{base_url}}/library/recentlyAdded?X-Plex-Token={{token}}&X-Plex-Containe\
+  r-Size=100&type=1"
+method: GET
+headers:
+  X-Plex-Token: "{{token}}"
+queryParams:
+  X-Plex-Token: "{{token}}"
+  X-Plex-Container-Size: "100"
+  type: "1"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200\", () => {\r
+
+      \    pm.expect(pm.response.status).to.equal(\"OK\");\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Recently added items returned\", () => {\r
+
+      \    pm.expect(pm.response.body).to.include(\"MediaContainer\");\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Response contains movie items\", () => {\r
+
+      \    pm.expect(pm.response.body).to.include('type=\"movie\"');\r
+
+      });"
+    language: text/javascript
+order: 511069942016675
