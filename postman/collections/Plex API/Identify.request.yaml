@@ -1,0 +1,12 @@
+$kind: http-request
+name: Identify
+url: "{{base_url}}/identity"
+method: GET
+headers:
+  - key: X-Plex-Token
+    value: "{{token}}"
+scripts:
+  - type: afterResponse
+    code: console.log(Object.keys(pm));
+    language: text/javascript
+order: 1772610939240

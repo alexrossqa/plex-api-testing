@@ -1,0 +1,7 @@
+$kind: http-request
+name: Get Libraries
+url: "{{base_url}}/library/sections"
+method: GET
+headers:
+  X-Plex-Token: "{{token}}"
+order: 241594594029935
