@@ -93,7 +93,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Recently Added",
 			"event": [
 				{
 					"listen": "test",
@@ -142,6 +142,57 @@
 						{
 							"key": "type",
 							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Metadata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Item metadata returned\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"MediaContainer\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"IMDB ID present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"imdb://\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"TMDB ID present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"tmdb://\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/library/metadata/8659?X-Plex-Token={{token}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"library",
+						"metadata",
+						"8659"
+					],
+					"query": [
+						{
+							"key": "X-Plex-Token",
+							"value": "{{token}}"
 						}
 					]
 				}
